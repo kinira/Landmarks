@@ -4,19 +4,21 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { CitiesComponent } from './cities/cities.component';
+import { MainNavigationComponent } from './navigation/main-navigation/main-navigation.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CitiesComponent
+    MainNavigationComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [MainNavigationComponent,SearchComponent],
+  bootstrap: [AppComponent,MainNavigationComponent,SearchComponent]
 })
 export class AppModule { }
