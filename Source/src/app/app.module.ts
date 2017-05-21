@@ -8,11 +8,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { MainNavigationComponent } from './navigation/main-navigation/main-navigation.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-
-const appRoutes: Routes = [
-  { path: 'dashboard', component: DashboardComponent },
-];
-
+import { AppRoutingModule } from './app.routing.module';
+import { SearchResultComponent } from './search-result/search-result.component';
 
 
 @NgModule({
@@ -20,14 +17,15 @@ const appRoutes: Routes = [
     AppComponent,
     MainNavigationComponent,
     DashboardComponent,
+    SearchResultComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(appRoutes)
-    ],
-  exports: [ RouterModule ],
+    AppRoutingModule
+  ],
+  exports: [RouterModule],
   providers: [MainNavigationComponent],
   bootstrap: [AppComponent, MainNavigationComponent]
 })

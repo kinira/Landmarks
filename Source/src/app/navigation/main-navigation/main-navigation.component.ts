@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainNavigationComponent implements OnInit {
 
+  keyword: string;
+
   constructor() { }
 
   ngOnInit() {
