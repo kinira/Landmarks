@@ -10,6 +10,7 @@ import { MainNavigationComponent } from './navigation/main-navigation/main-navig
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppRoutingModule } from './app.routing.module';
 import { SearchResultComponent } from './search-result/search-result.component';
+import { StoriesComponent } from './stories/stories.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { SearchResultComponent } from './search-result/search-result.component';
     MainNavigationComponent,
     DashboardComponent,
     SearchResultComponent,
+    StoriesComponent,
   ],
   imports: [
     BrowserModule,

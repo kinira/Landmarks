@@ -1,0 +1,23 @@
+<div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                  <div class="page-header">
+                    <h1><small class="pull-right">3 stories</small> Stories </h1>
+                  </div> 
+                   <div class="comments-list">
+                       <div class="media" *ngFor="let story of allstories">
+                           <p class="pull-right"><small>5 days ago</small></p>
+                           Story was written by user: <span> {{story.username}} </span>
+                            <div class="media-body">
+                                
+                              <h4 class="media-heading user_name">Story is about {{story.town}}</h4>
+                                {{story.text}}
+                              
+                              <p><small><a href="">Like</a> - <a href="">Share</a></small></p>
+                            </div>
+                          </div>
+                   </div>
+                   <button class="btn btn-primary">Add new story </button>
+                </div>
+            </div>
+        </div>
