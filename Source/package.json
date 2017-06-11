@@ -1,0 +1,11 @@
+{
+  "name": "source",
+  "version": "1.0.0",
+  "description": "This package json file is useful for easily starting both backend & front end simutaneously",
+  "license": "MIT",
+  "scripts": {
+    "start": "cd frontend && ng serve --proxy-config proxy.conf.json",
+    "backend": "cd backend && tsc -p .",
+    "restore" : "cd frontend && npm install && echo front-end install done && cd ../backend && npm install && echo back-end install done"
+  }
+}

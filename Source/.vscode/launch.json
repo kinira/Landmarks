@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+     "compounds": [
+        {
+            "name": "Frontend & Backend",
+            "configurations": [
+                "Frontend",
+                "Backend"
+            ]
+        }
+    ],
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Backend",
+            "program": "${workspaceRoot}/backend/server.ts",
+            "preLaunchTask": "backend",
+            "sourceMaps": true,
+            "outFiles": [
+                "${workspaceRoot}/backend/dist/**/*.js"
+            ]
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Frontend",
+            "url": "http://localhost:4200",
+            "webRoot": "${workspaceRoot}/frontend"
+        }
+    ]
+}

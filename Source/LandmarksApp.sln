@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "LandmarksBackend", "backend\LandmarksBackend.njsproj", "{B7A6FAA9-92B6-4C84-9D7C-72C491F0DFC6}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "LandmarksAngular", "frontend\LandmarksAngular.njsproj", "{C88BCC19-42CD-479E-8EBA-8B399926E5E8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B7A6FAA9-92B6-4C84-9D7C-72C491F0DFC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7A6FAA9-92B6-4C84-9D7C-72C491F0DFC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7A6FAA9-92B6-4C84-9D7C-72C491F0DFC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7A6FAA9-92B6-4C84-9D7C-72C491F0DFC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C88BCC19-42CD-479E-8EBA-8B399926E5E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C88BCC19-42CD-479E-8EBA-8B399926E5E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C88BCC19-42CD-479E-8EBA-8B399926E5E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C88BCC19-42CD-479E-8EBA-8B399926E5E8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
