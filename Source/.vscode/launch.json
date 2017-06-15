@@ -26,7 +26,10 @@
             "request": "launch",
             "name": "Frontend",
             "url": "http://localhost:4200",
-            "webRoot": "${workspaceRoot}/frontend"
+            "webRoot": "${workspaceRoot}/frontend",
+            "linux": {
+                "runtimeExecutable": "google-chrome-stable"
+            }
         }
     ]
 }

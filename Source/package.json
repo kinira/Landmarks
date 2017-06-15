@@ -6,6 +6,9 @@
   "scripts": {
     "start": "cd frontend && ng serve --proxy-config proxy.conf.json",
     "backend": "cd backend && tsc -p .",
-    "restore" : "cd frontend && npm install && echo front-end install done && cd ../backend && npm install && echo back-end install done"
+    "restore": "cd frontend && npm install && echo front-end install done && cd ../backend && npm install && echo back-end install done"
+  },
+  "dependencies": {
+    "@types/google-maps": "^3.2.0"
   }
 }

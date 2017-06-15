@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-declare var google: any;
+import { } from '@types/googlemaps';
+import { RouteDetailsComponent } from '../route-details/route-details.component';
 
 @Component({
   selector: 'app-search-result',
@@ -35,7 +36,7 @@ export class SearchResultComponent implements OnInit {
       geocoder.geocode({ 'address': this.keyword }, (results, status) => {
         if (status === google.maps.GeocoderStatus.OK) {
           this.setPlace(results[0].geometry.location);
-        }  else {
+        } else {
           console.log('Geocoding failed: ' + status);
         }
       });

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, NgZone } from '@angular/core';
+import { } from '@types/googlemaps';
 import * as $ from 'jquery';
-declare var google: any;
+
 
 @Component({
   selector: 'app-main-navigation',
@@ -10,9 +10,10 @@ declare var google: any;
 })
 export class MainNavigationComponent implements OnInit {
 
-  keyword: string;
+  public keyword: string;
 
-  constructor() { }
+  constructor(private ngZone: NgZone) {
+  }
 
   ngOnInit() {
     this.initAutocomplete();
@@ -20,11 +21,19 @@ export class MainNavigationComponent implements OnInit {
 
   initAutocomplete() {
 
-    $(document).ready(function () {
-      var searchBox = document.getElementById('search');
-      var autocomplete = new google.maps.places.Autocomplete(/** @type {!HTMLInputElement} */ searchBox,
+    $(document).ready(() => {
+      var searchBox = <HTMLInputElement>document.getElementById('search');
+      var autocomplete = new google.maps.places.Autocomplete(searchBox,
         { types: ['geocode'] });
+
+
+      autocomplete.addListener('place_changed', _ => this.setPlace(autocomplete.getPlace()));
     })
   }
 
+  setPlace(place: google.maps.places.PlaceResult) {
+    this.ngZone.run(() => {
+      this.keyword = place.name;
+    })
+  }
 }

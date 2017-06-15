@@ -9,8 +9,9 @@ import { AppComponent } from './app.component';
 import { MainNavigationComponent } from './navigation/main-navigation/main-navigation.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppRoutingModule } from './app.routing.module';
-import { SearchResultComponent } from './search-result/search-result.component';
 import { StoriesComponent } from './stories/stories.component';
+import { SearchResultComponent } from './search-result/search-result.component';
+import { RouteDetailsComponent } from './route-details/route-details.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { StoriesComponent } from './stories/stories.component';
     AppComponent,
     MainNavigationComponent,
     DashboardComponent,
+    RouteDetailsComponent,
     SearchResultComponent,
     StoriesComponent,
   ],
@@ -27,7 +29,7 @@ import { StoriesComponent } from './stories/stories.component';
     HttpModule,
     AppRoutingModule
   ],
-  exports: [RouterModule],
+  exports: [RouterModule, RouteDetailsComponent],
   providers: [MainNavigationComponent],
   bootstrap: [AppComponent, MainNavigationComponent]
 })
