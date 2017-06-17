@@ -4,13 +4,12 @@ import * as favicon from 'serve-favicon'
 import * as logger from 'morgan';
 import * as cookieParser from 'cookie-parser'
 import * as bodyParser from 'body-parser'
-
+import { v1 as neo4j } from 'neo4j-driver';
 
 import { router as index } from './routes/index';
 
 var app = express();
-
-
+var driver = neo4j.driver("bolt://hobby-aoopokmhoeaggbkenpmglkpl.dbs.graphenedb.com:24786", neo4j.auth.basic("landmarks-app", "b.XdP0XkwTWdXS.aUbTQSm9MYCmllpy"));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -35,7 +34,7 @@ app.use(function (req, res, next) {
 });
 
 // error handler
-app.use(function (err : Error, req, res, next) {
+app.use(function (err: Error, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -46,3 +45,4 @@ app.use(function (err : Error, req, res, next) {
 });
 
 export default app;
+export { driver };

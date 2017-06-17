@@ -3,7 +3,13 @@
         "target": "es6",
         "module": "commonjs",
         "sourceMap": true,
-        "outDir": "dist"
+        "outDir": "dist",
+        "baseUrl": ".",
+        "paths": {
+            "*": [
+                "./typings/*"
+            ]
+        }
     },
     "include": [
         "./**/*.ts"
