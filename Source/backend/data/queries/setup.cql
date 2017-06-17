@@ -1,7 +1,9 @@
-CREATE (adm:User {name:"Admin", password : "Test123" }),
-       (test:User {name:"Tester", password : "Test123"})
 
-CREATE CONSTRAINT ON (u:User) ASSERT u.name IS UNIQUE;
+CREATE CONSTRAINT ON (u:User) ASSERT u.username IS UNIQUE;
+
+CREATE (adm:User {username:"Admin", password : "Test123" }),
+       (test:User {username:"Tester", password : "Test123"})
+
 
 CREATE (sf:City {name:"Sofia", Id : "123" })
 

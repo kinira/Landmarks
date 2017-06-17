@@ -1,50 +1,40 @@
 import { Request, Response, Router, NextFunction } from 'express';
-import { db } from "../app";
+import { default as userManager } from '../data/userManager';
+import { default as authModule } from '../modules/auth';
+
 var router = Router();
-
-function createSomeData() {
-  // Create a session to run Cypher statements in.
-  // Note: Always make sure to close sessions when you are done using them!
-  var session = db.session();
-
-  // Run a Cypher statement, reading the result in a streaming manner as records arrive:
-  session
-    .run('MERGE (alice:Person {name : {nameParam} }) RETURN alice.name AS name', { nameParam: 'Alice' })
-    .subscribe({
-      onNext: function (record) {
-        console.log(record.get('name'));
-      },
-      onCompleted: function () {
-        session.close();
-      },
-      onError: function (error) {
-        console.log(error);
-      }
-    });
-
-  // or
-  // the Promise way, where the complete result is collected before we act on it:
-  session
-    .run('MERGE (james:Person {name : {nameParam} }) RETURN james.name AS name', { nameParam: 'James' })
-    .then(function (result) {
-      result.records.forEach(function (record) {
-        console.log(record.get('name'));
-        console.log(result.summary.counters.indexesAdded());
-        console.log(result.summary.resultAvailableAfter.low);
-      });
-      session.close();
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-}
 
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-  createSomeData();
-
-  res.json({ "title": "index", "text": "hello there!" })
+router.get('/', async (req, res) => {
+  try {
+    //var createRes = await userManager.createUser("kalin", "Test123!");
+    var findRes = await userManager.findUser("kalin");
+    var checkPassword = await userManager.verifyLogin("kalin", "Test123!");
+    res.json({ "title": "index", "text": "hello there!" })
+  } catch (error) {
+    res.status(500);  
+    res.json(`Could not create user | ${error}`);
+  }
 });
+
+
+router.post('/login', async (req, res) => {
+  try {
+    var user = await userManager.verifyLogin(req.body.username, req.body.password);
+    var token = await authModule.signIn(user);
+    res.header("Authorization", `Bearer ${token}`);
+    res.json({ "success": true });
+  } catch (error) {
+    res.status(400);
+    res.json({ "success": false });
+  }
+
+});
+
+router.get('/protected', authModule.isAuthorized, (req, res) => {
+  res.json({ "success": true, "message": "you have succesfully accessed protected resource" });
+})
+
 
 export { router };
