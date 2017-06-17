@@ -1,6 +1,7 @@
 import { default as app } from './app';
 import * as debugModule from 'debug';
 import * as http from 'http';
+import {config} from './config';
 
 var debug = debugModule('landmarksapi:server');
 
@@ -8,7 +9,7 @@ var debug = debugModule('landmarksapi:server');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || config.port);
 app.set('port', port);
 
 

@@ -5,11 +5,11 @@ import * as logger from 'morgan';
 import * as cookieParser from 'cookie-parser'
 import * as bodyParser from 'body-parser'
 import { v1 as neo4j } from 'neo4j-driver';
-
+import {config} from './config'
 import { router as index } from './routes/index';
 
 var app = express();
-var driver = neo4j.driver("bolt://hobby-aoopokmhoeaggbkenpmglkpl.dbs.graphenedb.com:24786", neo4j.auth.basic("landmarks-app", "b.XdP0XkwTWdXS.aUbTQSm9MYCmllpy"));
+var db = neo4j.driver(config.dbConnection, neo4j.auth.basic(config.dbUsername, config.dbPassword));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -45,4 +45,4 @@ app.use(function (err: Error, req, res, next) {
 });
 
 export default app;
-export { driver };
+export { db };

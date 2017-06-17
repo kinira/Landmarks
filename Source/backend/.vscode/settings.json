@@ -10,6 +10,7 @@
         "**/bin": true,
         "**/obj": true,
         "**/dist": true,
-        "**/.vs": true
+        "**/.vs": true,
+        "**/*.njsproj" : true
     }
 }
