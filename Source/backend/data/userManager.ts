@@ -1,6 +1,7 @@
 import { User } from './models/user';
-import { db } from '../app';
+import { db } from '../server';
 import * as bcrypt from 'bcrypt';
+import { BadRequest } from 'ts-httpexceptions';
 
 export class UserDataManager {
 
@@ -23,8 +24,8 @@ export class UserDataManager {
         let user = await this.findUser(username);
         let passwordHash = user.password;
 
-        if(await bcrypt.compare(password, passwordHash) == false){
-            throw new Error("Username/password is invalid");
+        if (await bcrypt.compare(password, passwordHash) == false) {
+            throw new BadRequest("Username/password is invalid");
         } else {
             return user;
         }

@@ -7,19 +7,20 @@ var router = Router();
 
 export class AuthenticationModule {
 
-    isAuthorized(req: Request, res: Response, next: NextFunction) {
-        try {
-            var authHeader = req.headers["authorization"] as string;
-            var token = authHeader.split(" ")[1];
+    isAuthorized(req: Request) {
+        return new Promise((resolve, reject) => {
+            try {
+                var authHeader = req.headers["authorization"] as string;
+                var token = authHeader.split(" ")[1];
 
-            jwt.verify(token, config.appSecret, undefined, (err, decoded) => {
-                if (err) throw new Error('failed to authorize token');
-                else next();
-            });
-        } catch (error) {
-            res.status(401);
-            res.json({ "error": "authorization failed" });
-        }
+                jwt.verify(token, config.appSecret, undefined, (err, decoded) => {
+                    if (err) resolve(false);
+                    resolve(true);
+                });
+            } catch (error) {
+                resolve(false);
+            }
+        });
     }
 
     signIn(user: User) {

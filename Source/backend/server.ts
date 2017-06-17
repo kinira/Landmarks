@@ -1,88 +1,92 @@
-import { default as app } from './app';
-import * as debugModule from 'debug';
-import * as http from 'http';
-import {config} from './config';
+import { ServerLoader, ServerSettings, GlobalAcceptMimesMiddleware } from 'ts-express-decorators';
+import { Exception } from 'ts-httpexceptions';
+import * as path from 'path'
+import * as express from 'express';
+import * as favicon from 'serve-favicon'
+import * as logger from 'morgan';
+import * as cookieParser from 'cookie-parser'
+import * as bodyParser from 'body-parser'
+import { v1 as neo4j } from 'neo4j-driver';
+import { config } from './config'
+import { default as authModule } from './modules/auth';
 
-var debug = debugModule('landmarksapi:server');
+const rootDir = path.resolve(__dirname);
+const db = neo4j.driver(config.dbConnection, neo4j.auth.basic(config.dbUsername, config.dbPassword));
 
-/**
- * Get port from environment and store in Express.
- */
+@ServerSettings({
+    rootDir,
+    acceptMimes: ['application/json'] // optional
+})
+export class Server extends ServerLoader {
 
-var port = normalizePort(process.env.PORT || config.port);
-app.set('port', port);
+    constructor() {
+        super();
+        this.setEndpoint("/api")                       // Declare your endpoint
+            .scan(rootDir + "/controllers/**/**.js")    // Declare the directory that contains your controllers
+            .createHttpServer(config.port);
+    }
 
 
-/**
- * Create HTTP server.
- */
+    /**
+     * This method let you configure the middleware required by your application to works.
+     * @returns {Server}
+     */
+    $onMountingMiddlewares(): void | Promise<any> {
+        this
+            .use(logger('dev'))
+            .use(GlobalAcceptMimesMiddleware) // optional
+            .use(cookieParser())
+            .use(bodyParser.json())
+            .use(bodyParser.urlencoded({
+                extended: true
+            }));
 
-var server = http.createServer(app);
+        return null;
+    }
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+    public $onReady() {
+        console.log('Server started...');
+    }
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+    public $onAuth(request, response, next, options?) {
+        authModule.isAuthorized(request).then(next);
+    }
 
-/**
- * Normalize a port into a number, string, or false.
- */
+    public $onError(error: any, request: express.Request, response: express.Response, next: Function): void {
 
-function normalizePort(val) {
-  var port = parseInt(val, 10);
+        if (response.headersSent) {
+            return next(error);
+        }
 
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
+        if (error instanceof Exception) {
+            let httpError = error as Exception;
 
-  if (port >= 0) {
-    // port number
-    return port;
-  }
+            response.status(httpError.status).send(httpError.);
+            return next();
+        }
 
-  return false;
+        if (error instanceof Error) {
+            response.status(500).send(error.message);
+            return next();
+        }
+
+        if (error.name === "CastError" || error.name === "ObjectID" || error.name === "ValidationError") {
+            response.status(400).send("Bad Request");
+            return next();
+        }
+
+        response.status(error.status || 500).send("Internal Error");
+
+        return next();
+
+    }
+
+    public $onServerInitError(err) {
+        console.error(err);
+    }
+
 }
 
-/**
- * Event listener for HTTP server "error" event.
- */
+new Server().start();
 
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
-
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-}
-
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
-}
+export { db };
