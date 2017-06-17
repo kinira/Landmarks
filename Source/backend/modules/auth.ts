@@ -2,12 +2,14 @@ import { NextFunction, Request, Response, Router } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { config } from '../config';
 import { User } from '../data/models/user';
+import { Service } from "ts-express-decorators/lib";
 
 var router = Router();
 
+@Service()
 export class AuthenticationModule {
 
-    isAuthorized(req: Request) {
+    public isAuthorized(req: Request) {
         return new Promise((resolve, reject) => {
             try {
                 var authHeader = req.headers["authorization"] as string;
@@ -23,7 +25,7 @@ export class AuthenticationModule {
         });
     }
 
-    signIn(user: User) {
+    public signIn(user: User) {
         return new Promise<string>((resolve, reject) => {
             var claimsData = { username: user.username };
 

@@ -61,7 +61,7 @@ export class Server extends ServerLoader {
         if (error instanceof Exception) {
             let httpError = error as Exception;
 
-            response.status(httpError.status).send(httpError.);
+            response.status(httpError.status).send(httpError.message);
             return next();
         }
 

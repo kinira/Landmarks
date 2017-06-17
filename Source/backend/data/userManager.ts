@@ -2,8 +2,10 @@ import { User } from './models/user';
 import { db } from '../server';
 import * as bcrypt from 'bcrypt';
 import { BadRequest } from 'ts-httpexceptions';
+import { Service } from 'ts-express-decorators/lib';
 
-export class UserDataManager {
+@Service()
+export default class UserDataManager {
 
     private HASH_ROUNDS = 10;
 
@@ -32,6 +34,3 @@ export class UserDataManager {
     }
 
 }
-
-// Export a default instance (like a singleton)
-export default new UserDataManager();
