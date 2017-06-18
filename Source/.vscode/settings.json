@@ -13,6 +13,7 @@
         "**/bin": true,
         "**/obj": true,
         "**/*.sln": true,
-        "**/*.njsproj": true
+        "**/*.njsproj": true,
+        "**/dist" : true
     }
 }

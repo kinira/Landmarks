@@ -11,6 +11,9 @@ export default class UserDataManager {
 
     async findUser(username: string): Promise<User> {
         let res = await db.session().run('MATCH (n:User) WHERE n.username = {nameParam} RETURN n', { nameParam: username });
+        if (!res.records.length)
+            throw new BadRequest("Username does not exist");
+
         return <User>res.records[0].get('n').properties;
     }
 
