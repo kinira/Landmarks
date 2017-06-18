@@ -7,4 +7,6 @@ var config = {
     appSecret: "__Sample $3cRe7!™▒≡Ç┘©"
 }
 
+// HTTP Alternative: http://hobby-aoopokmhoeaggbkenpmglkpl.dbs.graphenedb.com:24789/browser/
+
 export { config };

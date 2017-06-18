@@ -1,5 +1,5 @@
 import * as Express from "express";
-import { Controller, Get, Response, Request, Next, PathParams, BodyParams, Post, Authenticated, Inject } from "ts-express-decorators";
+import { Controller, Get, Response, Request, Next, PathParams, BodyParams, Post, Authenticated, Inject, Status } from "ts-express-decorators";
 import { User } from '../data/models/user';
 import UserDataManager from '../data/userManager';
 import { AuthenticationModule } from '../modules/auth';
@@ -38,7 +38,7 @@ export class IndexController {
         return { "status": "success", "token": token };
     }
 
-    @Get("/protected") @Authenticated()
+    @Get("/protected") @Authenticated() @Status(201)
     public protectedThing() {
         return { "message": `hello you accessed a protected resource!` };
     }
