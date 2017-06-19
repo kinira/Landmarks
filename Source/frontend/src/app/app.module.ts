@@ -11,6 +11,7 @@ import { StoriesComponent } from './stories/stories.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { RouteDetailsComponent } from './route-details/route-details.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { LoginComponent } from './login/login.component';
     SearchResultComponent,
     StoriesComponent,
     LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
