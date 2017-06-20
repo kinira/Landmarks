@@ -1,13 +1,13 @@
 import * as Express from "express";
 import {
     Controller, Get, Response, Request, Next, PathParams, BodyParams,
-    Post, Authenticated, Inject, Status
+    Post, Authenticated, Inject, Status, MultipartFile
 } from "ts-express-decorators";
 import { LoginData } from '../models/LoginData';
 import { UserDataManager } from '../data/userManager';
 import { AuthenticationModule } from '../modules/auth';
 import { RegistrationData } from '../models/RegistrationData';
-import { async } from '@angular/core/testing';
+require('multer');
 
 
 @Controller("/")
@@ -38,6 +38,10 @@ export class UserController {
         }
     }
 
+    @Post('/file')
+    private uploadFile( @MultipartFile() file) {
+        return { "file": file };
+    }
 
     @Post("/register") @Status(201)
     public register( @BodyParams() registerData: RegistrationData) {
