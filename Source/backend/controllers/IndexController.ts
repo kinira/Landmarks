@@ -1,6 +1,6 @@
 import * as Express from "express";
 import { Controller, Get, Response, Request, Next, PathParams, BodyParams, Post, Authenticated, Inject, Status } from "ts-express-decorators";
-import UserDataManager from '../data/userManager';
+import { UserDataManager } from '../data/userManager';
 import { AuthenticationModule } from '../modules/auth';
 
 

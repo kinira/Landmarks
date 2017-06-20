@@ -4,9 +4,10 @@ import {
     Post, Authenticated, Inject, Status
 } from "ts-express-decorators";
 import { LoginData } from '../models/LoginData';
-import UserDataManager from '../data/userManager';
+import { UserDataManager } from '../data/userManager';
 import { AuthenticationModule } from '../modules/auth';
 import { RegistrationData } from '../models/RegistrationData';
+import { async } from '@angular/core/testing';
 
 
 @Controller("/")
@@ -26,6 +27,16 @@ export class UserController {
         return { "status": "success", "token": token };
     }
 
+
+    @Get("/users/isTaken/:username")
+    public async isTaken( @PathParams("username") username) {
+        try {
+            await this.userManager.findUser(username);
+            return { "taken": true }
+        } catch (error) {
+            return { "taken": false }
+        }
+    }
 
 
     @Post("/register") @Status(201)

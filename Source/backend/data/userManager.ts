@@ -5,7 +5,7 @@ import { BadRequest } from 'ts-httpexceptions';
 import { Service } from 'ts-express-decorators/lib';
 
 @Service()
-export default class UserDataManager {
+export class UserDataManager {
 
     private HASH_ROUNDS = 10;
 
