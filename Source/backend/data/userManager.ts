@@ -1,4 +1,4 @@
-import { User } from './models/user';
+import { User } from '../models/User';
 import { db } from '../server';
 import * as bcrypt from 'bcrypt';
 import { BadRequest } from 'ts-httpexceptions';
@@ -17,10 +17,10 @@ export default class UserDataManager {
         return <User>res.records[0].get('n').properties;
     }
 
-    async createUser(username: string, password: string) {
-        let passwordHash = await bcrypt.hash(password, this.HASH_ROUNDS);
-        let res = await db.session().run('CREATE (n:User { username: {nameParam}, password: {passParam}}) RETURN n',
-            { nameParam: username, passParam: passwordHash });
+    async createUser(user: User) {
+        let passwordHash = await bcrypt.hash(user.password, this.HASH_ROUNDS);
+        let res = await db.session().run('CREATE (n:User { username: {pUser}, password: {pPass}, name: {pName}, email: {pEmail} }) RETURN n',
+            { pUser: user.username, pPass: passwordHash, pName: user.name, pEmail: user.email });
 
         return res;
     }

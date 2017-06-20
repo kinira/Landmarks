@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { config } from '../config';
-import { User } from '../data/models/user';
+import { User } from '../models/User';
 import { Service } from "ts-express-decorators/lib";
 
 var router = Router();

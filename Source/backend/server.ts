@@ -9,6 +9,7 @@ import * as bodyParser from 'body-parser'
 import { v1 as neo4j } from 'neo4j-driver';
 import { config } from './config'
 import { default as authModule } from './modules/auth';
+import { ValidationError } from './models/errors/ValidationError';
 
 const rootDir = path.resolve(__dirname);
 const db = neo4j.driver(config.dbConnection, neo4j.auth.basic(config.dbUsername, config.dbPassword));
@@ -62,6 +63,10 @@ export class Server extends ServerLoader {
             let httpError = error as Exception;
 
             response.status(httpError.status).send(httpError.message);
+            return next();
+        }
+        if (error instanceof ValidationError) {
+            response.status(400).json({ message: "invalid data provided", errors: (error as ValidationError).errors });
             return next();
         }
 
