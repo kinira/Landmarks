@@ -9,6 +9,7 @@
     "restore": "cd frontend && npm install && echo front-end install done && cd ../backend && npm install && echo back-end install done"
   },
   "dependencies": {
-    "@types/google-maps": "^3.2.0"
+    "@types/google-maps": "^3.2.0",
+    "angular-trix": "^1.0.2"
   }
 }
