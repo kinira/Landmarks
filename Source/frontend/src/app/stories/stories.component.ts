@@ -2,6 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Story } from './stories.model';
 import { NgForm } from '@angular/forms/forms';
 import { } from 'angularTrix';
+import * as SimpleMDE from "simplemde";
+import * as $ from 'jquery';
+//var SimpleMDE2 : any = require('simplemde');
 
 @Component({
   selector: 'app-stories',
@@ -9,6 +12,7 @@ import { } from 'angularTrix';
   styleUrls: ['./stories.component.css']
 })
 export class StoriesComponent implements OnInit {
+  simplemde: SimpleMDE;
 
 allstories: Array<Story>;
 isEdit: boolean;
@@ -43,15 +47,25 @@ text: string;
                                                   'но е навлязъл и в публикуването на електронни издания като е запазен почти без промяна. Популяризиран е през 60те години '+
                                                   'на 20ти век със издаването на Letraset листи, съдържащи Lorem Ipsum пасажи, популярен е и в наши дни във софтуер за печатни '+
                                                   'издания като Aldus PageMaker, който включва различни версии на Lorem Ipsum.') ];
+
+
+      let textArea = $("#text")[0];
+      this.simplemde = new SimpleMDE({ element: textArea });
+
   }
 
 onSubmit(f: NgForm) {
-  let formaData = JSON.stringify(f.value);
-  let parsed = JSON.parse(formaData);
+  let parsed = f.value;
+
+
   console.log(parsed);
-  this.allstories.push(new Story(parsed.username, parsed.town, Date.now(), parsed.text));
+  this.allstories.push(new Story(parsed.username, parsed.town, Date.now(), this.simplemde.value()));
 
   console.log(JSON.stringify(f.value));
   // ;
-  }
+}
+
+setEdit(){       
+  this.isEdit = true;       
+}
 }

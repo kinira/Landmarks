@@ -22,11 +22,13 @@
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
     "@types/googlemaps": "^3.26.13",
-    "angular-trix": "^1.0.2",
+    "@types/simplemde": "^1.11.6",
     "angular2-jwt": "^0.2.3",
+    "angular2-markdown": "^1.6.0",
     "core-js": "^2.4.1",
     "jquery": "^3.2.1",
     "rxjs": "^5.1.0",
+    "simplemde": "^1.11.2",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {

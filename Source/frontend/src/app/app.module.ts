@@ -12,7 +12,7 @@ import { SearchResultComponent } from './search-result/search-result.component';
 import { RouteDetailsComponent } from './route-details/route-details.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-
+import { MarkdownModule } from 'angular2-markdown';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,8 @@ import { RegisterComponent } from './register/register.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+     MarkdownModule.forRoot(),
   ],
   exports: [RouterModule, RouteDetailsComponent],
   providers: [MainNavigationComponent],

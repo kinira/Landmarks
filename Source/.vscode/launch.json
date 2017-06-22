@@ -30,6 +30,6 @@
             "linux": {
                 "runtimeExecutable": "google-chrome-stable"
             }
-        }
+        }        
     ]
 }
