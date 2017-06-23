@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { } from '@types/googlemaps';
 import { RouteDetailsComponent } from '../route-details/route-details.component';
+import { MapsAPILoader } from '@agm/core';
 
 @Component({
   selector: 'app-search-result',
@@ -17,19 +18,17 @@ export class SearchResultComponent implements OnInit {
   service: any;
   infowindow: any;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private mapsLoader: MapsAPILoader) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.keyword = params['keyword'];
-
-      $(document).ready(_ => {
-        this.prepareMap();
-      });
+      this.prepareMap();
     });
   }
 
-  prepareMap() {
+  async prepareMap() {
+    await this.mapsLoader.load();
     const geocoder = new google.maps.Geocoder();
 
     if (geocoder) {

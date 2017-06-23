@@ -13,6 +13,8 @@ import { RouteDetailsComponent } from './route-details/route-details.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { MarkdownModule } from 'angular2-markdown';
+import { AgmCoreModule } from '@agm/core';
+import { CreateRouteComponent } from './create-route/create-route.component';
 
 @NgModule({
   declarations: [
@@ -24,13 +26,18 @@ import { MarkdownModule } from 'angular2-markdown';
     StoriesComponent,
     LoginComponent,
     RegisterComponent,
+    CreateRouteComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     AppRoutingModule,
-     MarkdownModule.forRoot(),
+    MarkdownModule.forRoot(),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAlMwSVS-E3Qtq8napZuoIkwVouZt8hvt0',
+      libraries: ['places']
+    })
   ],
   exports: [RouterModule, RouteDetailsComponent],
   providers: [MainNavigationComponent],

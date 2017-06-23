@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { } from '@types/googlemaps';
+import { MapsAPILoader } from '@agm/core';
 
 
 @Component({
@@ -10,16 +10,15 @@ import { } from '@types/googlemaps';
 
 export class RouteDetailsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private mapsLoader: MapsAPILoader) { }
 
   ngOnInit() {
-    $(document).ready(_ => {
-      this.mapsStuff();
-    });
-
+    this.prepareMap();
   }
 
-  mapsStuff() {
+  async prepareMap() {
+    await this.mapsLoader.load();
+    
     const directionsDisplay = new google.maps.DirectionsRenderer;
     const mapElement = document.getElementById('routeMap');
     const map = new google.maps.Map(mapElement, {

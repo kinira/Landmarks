@@ -1,0 +1,16 @@
+<p>
+  Begin Route Sample
+</p>
+
+<agm-map [latitude]="lat" [longitude]="lng" style="width:500px;height:380px;" #mapComponent (mapClick)="mapClicked($event)">
+  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+
+  <agm-marker *ngFor="let m of wayPoints" (markerClick)="clickedMarker(m.label, i)" [latitude]="m.lat" [longitude]="m.lng"
+    [label]="m.label" [markerDraggable]="m.draggable" (dragEnd)="markerDragEnd(m, $event)"></agm-marker>
+</agm-map>
+
+<button (click)="showRoute()"> ShowRoute </button>
+
+<p>
+  End Route Sample
+</p>
