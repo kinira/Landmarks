@@ -1,10 +1,11 @@
 import * as Express from "express";
 import { StoriesManager } from '../data/storiesManager';
-import { Story } from '../../frontend/src/app/stories/stories.model';
+import { StoryDb } from "../models/StoryDb";
 import {
     Controller, Get, Response, Request, Next, PathParams, BodyParams,
     Post, Authenticated, Inject, Status, MultipartFile, Delete
 } from "ts-express-decorators";
+
 
 @Controller("/")
 
@@ -13,7 +14,7 @@ export class StoriesController {
         this.storiesManager = storiesManager;
     }
 
-    @Get("/stories")
+    @Get("/stories/")
     public async All() {
         try {
           return { "stories" : await this.storiesManager.getAll() };
@@ -23,7 +24,7 @@ export class StoriesController {
     }
     @Post("/stories/") @Status(201)
 
-    public insert( @BodyParams() storyData: Story) {
+    public insert( @BodyParams() storyData: StoryDb) {
 
         this.storiesManager.insertStory(storyData);
         return { "message": "created" }
@@ -31,7 +32,7 @@ export class StoriesController {
 
     @Post("/stories/:id") 
 
-    public updateStory (@PathParams("id") id, @BodyParams() storyData: Story){
+    public updateStory (@PathParams("id") id, @BodyParams() storyData: StoryDb){
         this.storiesManager.updateStory(storyData);
         return {"message" : "updated"}
     }

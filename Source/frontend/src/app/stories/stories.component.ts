@@ -1,10 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Story } from './stories.model';
 import { NgForm } from '@angular/forms/forms';
-import { } from 'angularTrix';
 import * as SimpleMDE from "simplemde";
 import * as $ from 'jquery';
-//var SimpleMDE2 : any = require('simplemde');
 
 @Component({
   selector: 'app-stories',
@@ -23,11 +21,9 @@ text: string;
 
 
  @Input() story: Story = new Story(1,undefined, undefined, undefined, undefined);
-  constructor() { }
+ constructor() { }
 
-  ngOnInit() {
-
-    // var myApp = angular.module('app', ['angularTrix']);
+  ngOnInit() {    
 
     this.allstories = [new Story(1,'test', 'Sofia', Date.now(),'Lorem Ipsum е елементарен примерен текст, използван в печатарската и типографската индустрия.'+
                                                   'Lorem Ipsum е индустриален стандарт от около 1500 година, когато неизвестен печатар взема няколко печатарски '+
@@ -49,6 +45,7 @@ text: string;
                                                   'издания като Aldus PageMaker, който включва различни версии на Lorem Ipsum.') ];
 
 
+      // this.sService.loadAllStories().then(data => this.allstories = data);
       let textArea = $("#text")[0];
       this.simplemde = new SimpleMDE({ element: textArea });
 
@@ -62,7 +59,6 @@ onSubmit(f: NgForm) {
   this.allstories.push(new Story(4,parsed.username, parsed.town, Date.now(), this.simplemde.value()));
 
   console.log(JSON.stringify(f.value));
-  // ;
 }
 
 setEdit(){       

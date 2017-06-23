@@ -38,7 +38,7 @@ export class UserController {
     }
 
     @Post('/file')
-    private uploadFile( @MultipartFile() file: File) {
+    private uploadFile( @MultipartFile() file: any) {
         return { "file": file };
     }
 
