@@ -13,8 +13,8 @@ visited: Array<Dashboard>;
   constructor() { }
 
   ngOnInit() {
-      this.visited = [new Dashboard('Sofia', 'Bulgaria', 1012),
-                      new Dashboard('Prague', 'Czech', 120) ];
+      this.visited = [new Dashboard('Sofia',  1012),
+                      new Dashboard('Prague',  120) ];
   }
 
 }

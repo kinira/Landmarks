@@ -1,6 +1,7 @@
 import { db } from '../server'
 import { Service } from "ts-express-decorators/lib";
-import { Story } from "../../frontend/src/app/stories/stories.model";
+import { Story } from '../../frontend/src/app/stories/stories.model';
+import { BadRequest } from 'ts-httpexceptions';
 
 @Service()
 
@@ -22,9 +23,29 @@ export class StoriesManager {
         );
         return res;
      }
-     async updateStory(storyID : number){
-        let res = await db.session().run(
-            
-        )
+     async updateStory(forUpdate : Story){
+        await this.deleteStory(forUpdate.id);
+        await this.insertStory(forUpdate);
      }
+
+     async getAll() : Promise<Array<Story>> {
+        let allStories = await db.session().run(
+            `MATCH (s:Story) RETURN s`
+        );
+
+        return allStories;
+     }
+
+     async deleteStory(storyId : number){
+         try{
+            let res = await db.session().run(
+                `MATCH (s:Story) WHERE id(s) = {idParam} OPTIONAL MATCH (s)-[r]-() DELETE s,r`,
+                {idParam : storyId}
+            );
+         }
+         catch (error){
+            throw new BadRequest("Story id doesn't not exists!");
+         }
+     }
+
 }

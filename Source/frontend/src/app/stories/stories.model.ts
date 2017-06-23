@@ -1,6 +1,7 @@
 export class Story
 {
     constructor(
+        public id :number,
         public username: string,
         public town: string,
         public created: number,

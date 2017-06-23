@@ -49,5 +49,5 @@ export class UserController {
 
         this.userManager.createUser(registerData);
         return { "message": "created" }
-    }
+    }    
 }
