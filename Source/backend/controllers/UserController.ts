@@ -7,7 +7,6 @@ import { LoginData } from '../models/LoginData';
 import { UserDataManager } from '../data/userManager';
 import { AuthenticationModule } from '../modules/auth';
 import { RegistrationData } from '../models/RegistrationData';
-require('multer');
 
 
 @Controller("/")
@@ -39,7 +38,7 @@ export class UserController {
     }
 
     @Post('/file')
-    private uploadFile( @MultipartFile() file) {
+    private uploadFile( @MultipartFile() file: File) {
         return { "file": file };
     }
 
