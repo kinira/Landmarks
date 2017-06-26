@@ -2,10 +2,10 @@
             <div class="row">
                 <div class="col-md-8">
                
-                  <div class="page-header">
+                  <!--<div class="page-header">
                     <h1><small class="pull-right"> {{allstories.length}} stories</small> Stories </h1>
-                  </div> 
-                   <div *ngIf="allstories.length > 0">
+                  </div> -->
+                   <!--<div *ngIf="allstories.length > 0">-->
                    <div class="comments-list">
                        <div class="media" *ngFor="let story of allstories">
                            <p class="pull-right"><small>{{story.created | date: 'dd/MM/yyyy'}}</small></p>
@@ -20,7 +20,7 @@
                             </div>
                           </div>
                    </div>
-</div>
+<!--</div>-->
 
                    <button class="btn btn-primary" (click)="setEdit()" >Add new story </button>
 
