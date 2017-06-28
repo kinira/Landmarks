@@ -3,7 +3,7 @@ import { Story } from './stories.model';
 import { NgForm } from '@angular/forms/forms';
 import * as SimpleMDE from "simplemde";
 import * as $ from 'jquery';
-import { StoriesService } from "app/_services/stories.service";
+import { StoriesService } from "../_services/stories.service";
 
 @Component({
   selector: 'app-stories',

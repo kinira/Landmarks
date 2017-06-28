@@ -17,7 +17,7 @@ export class DashboardManager {
     	     OPTIONAL MATCH (city)<-[IS_ABOUT]-(story:Story)
              return city.name as city, count(story) as storiesAbout 
              Order by storiesAbout desc
-             Limit 5`
+             Limit 5`, {}
         );
         let data = res.records.map(rec => new DashboardItem(rec.get('city'), rec.get('storiesAbout').toNumber()));
         return data;

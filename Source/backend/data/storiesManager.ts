@@ -32,7 +32,7 @@ export class StoriesManager {
      async getAll() : Promise<Array<StoryDb>> {
         let allStories = await db.session().run(
             `MATCH  (city:City)<-[:IS_ABOUT]-(s:Story)<-[:CREATED]-(user:User)
-            RETURN s.date as date, id(s) as id, s.text as text,user.name as username, city.name as city`
+            RETURN s.date as date, id(s) as id, s.text as text,user.name as username, city.name as city`, {}
         );
         let mapped = allStories.records.map(rec => 
                         new StoryDb(rec.get('id').toNumber(),
