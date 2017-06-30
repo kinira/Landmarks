@@ -1,5 +1,6 @@
 import * as Express from "express";
-import { DashboardManager } from '../data/DashboardManager';
+
+import { DashboardManager } from '../data/dashboardManager';
 import {
     Controller, Get, Response, Request, Next, PathParams, BodyParams,
     Post, Authenticated, Inject, Status, MultipartFile, Delete

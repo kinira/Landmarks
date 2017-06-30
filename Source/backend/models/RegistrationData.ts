@@ -1,4 +1,3 @@
-import { StoriesComponent } from '../../frontend/src/app/stories/stories.component';
 import { User } from './User';
 import { ValidationMessage } from './errors/ValidationMessage';
 
