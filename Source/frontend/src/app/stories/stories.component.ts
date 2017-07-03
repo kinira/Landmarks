@@ -14,6 +14,7 @@ import { StoriesService } from "../_services/stories.service";
 export class StoriesComponent implements OnInit {
   simplemde: SimpleMDE;
 
+tempstories: Array<Story>;
 allstories: Array<Story>;
 isEdit: boolean;
 
@@ -47,7 +48,8 @@ text: string;
     //                                               'издания като Aldus PageMaker, който включва различни версии на Lorem Ipsum.') ];
 
 
-      this.storyService.loadAllStories().then(data => this.allstories = data);
+      this.storyService.loadAllStories().then(data => this.tempstories = data);
+      this.allstories = this.tempstories;
       let textArea = $("#text")[0];
       
       this.simplemde = new SimpleMDE({ element: textArea });

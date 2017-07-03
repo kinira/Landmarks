@@ -15,7 +15,7 @@ export class StoriesService {
       data => {
         let storiesData = data.json();
         let mapped = new Array<Story>();
-        for (let el of storiesData){
+        for (let el of storiesData.stories){
            mapped.push(new Story(el.id, el.username, el.town, el.created, el.text))
         }
         // storiesData.forEach(el => {
