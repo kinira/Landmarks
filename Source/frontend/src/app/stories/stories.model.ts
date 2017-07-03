@@ -1,6 +1,5 @@
-export class Story
-{
-    constructor(        public id :number,        public username: string,        public town: string,        
-    public created: number,        public text: string,        public lastEdit?: number) {}
+export class Story {
+    constructor(public id: number = 0, public username = "", public town = "",
+        public created = new Date().getDate(), public text = "", public lastEdit?: number) { }
 
 }

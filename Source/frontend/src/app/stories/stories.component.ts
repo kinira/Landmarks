@@ -16,13 +16,10 @@ export class StoriesComponent implements OnInit {
   simplemde: SimpleMDE;
 
   allstories: Array<Story> = [];
+  
   isEdit: boolean;
 
-  username: string;
-  
-  town: string;
-
-  text: string;
+  story : Story = new Story();
 
   constructor(private storyService: StoriesService) { }
 
