@@ -15,9 +15,12 @@ export class StoriesService {
       data => {
         let storiesData = data.json();
         let mapped = new Array<Story>();
-        storiesData.forEach(el => {
-          mapped.push(new Story(el.id, el.username, el.town, el.created, el.text))
-        });
+        for (let el of storiesData){
+           mapped.push(new Story(el.id, el.username, el.town, el.created, el.text))
+        }
+        // storiesData.forEach(el => {
+        //   mapped.push(new Story(el.id, el.username, el.town, el.created, el.text))
+        // });
         return mapped;
       }
       );
