@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone, Input } from '@angular/core';
 import { } from '@types/googlemaps';
 import { AgmCoreModule, MapsAPILoader, AgmMap, MouseEvent, GoogleMapsAPIWrapper } from '@agm/core';
 
@@ -8,50 +8,68 @@ import { AgmCoreModule, MapsAPILoader, AgmMap, MouseEvent, GoogleMapsAPIWrapper 
   templateUrl: './create-route.component.html',
   styleUrls: ['./create-route.component.css']
 })
+
 export class CreateRouteComponent implements OnInit {
+  map: google.maps.Map;
 
-  lat = 41.85;
-  lng = -87.65
+  private wayPoints: google.maps.DirectionsWaypoint[];
 
-  private wayPoints = [];
-
-  @ViewChild('mapComponent')
-  private mapComponent: AgmMap;
-
+  @Input()
+  city: string = "Sofia";
 
   constructor(private mapsLoader: MapsAPILoader, private ngZone: NgZone) { }
 
   ngOnInit() {
+    this.wayPoints = [];
+    this.prepareMap();
   }
 
-
-  placeMarkerAndPanTo(latLng, map) {
-    var marker = new google.maps.Marker({
-      position: latLng,
-      map: map
-    });
-
-    map.panTo(latLng);
-    this.wayPoints.push(latLng);
-  }
-
-  mapClicked(eventData: MouseEvent) {
-    this.wayPoints.push({
-      lat: eventData.coords.lat,
-      lng: eventData.coords.lng
-    });
-  }
-
-  async showRoute() {
+  async prepareMap() {
     await this.mapsLoader.load();
 
-    const wrapper =  this.mapComponent["_mapsWrapper"] as GoogleMapsAPIWrapper;
-    const map = await wrapper.getNativeMap();
-  
     const directionsDisplay = new google.maps.DirectionsRenderer;
+    const mapElement = document.getElementById('routeMap');
+
+    this.map = new google.maps.Map(mapElement, {
+      zoom: 6,
+      center: { lat: 41.85, lng: -87.65 }
+    });
+
+    this.map.addListener('click', e => this.onMapClicked(e));
+  }
+
+  onMapClicked(eventInfo) {
+    var position = <google.maps.LatLng>eventInfo.latLng;
+
+    this.ngZone.run(() => {
+      this.wayPoints.push(<google.maps.DirectionsWaypoint>{ location: position, stopover: true });
+      this.addMarker(position);
+    })
+  }
+
+  addMarker(position: google.maps.LatLng) {
+    var marker = new google.maps.Marker({
+      position: position
+    });
+
+    marker.setMap(this.map);
+    this.map.panTo(position);
+  }
+
+  resetMap() {
+    this.wayPoints = [];
+    this.prepareMap();
+  }
+
+  saveRoute(){
+    // Authorized users only
+  }
 
 
+  showRoute() {
+    const directionsDisplay = new google.maps.DirectionsRenderer;
     const directionsService = new google.maps.DirectionsService;
+    directionsDisplay.setMap(this.map);
 
     let intermediatePoints = this.wayPoints.slice(1, this.wayPoints.length - 2);
 
@@ -68,6 +86,5 @@ export class CreateRouteComponent implements OnInit {
         directionsDisplay.setDirections(result);
       }
     });
-
   }
 }

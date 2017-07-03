@@ -1,16 +1,18 @@
-<p>
-  Begin Route Sample
-</p>
+<div class="container">
+  <h1> Create route for city: {{city}} </h1>
 
-<agm-map [latitude]="lat" [longitude]="lng" style="width:500px;height:380px;" #mapComponent (mapClick)="mapClicked($event)">
-  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+  <div id="routeMap" style="width:500px;height:380px;"></div>
+  <hr />
 
-  <agm-marker *ngFor="let m of wayPoints" (markerClick)="clickedMarker(m.label, i)" [latitude]="m.lat" [longitude]="m.lng"
-    [label]="m.label" [markerDraggable]="m.draggable" (dragEnd)="markerDragEnd(m, $event)"></agm-marker>
-</agm-map>
+  <form class="row">
+    <div class="col-md-6">
+      <textarea class="form-control" name="" id="" cols="30" rows="10" placeholder="Route description" required></textarea>
+    </div>
+  </form>
 
-<button (click)="showRoute()"> ShowRoute </button>
-
-<p>
-  End Route Sample
-</p>
+  <div>
+    <button (click)="showRoute()" class="btn btn-primary"> Preview </button>
+    <button (click)="saveRoute()" class="btn btn-success"> Save </button>
+    <button (click)="resetMap()" class="btn btn-danger"> Reset </button>
+  </div>
+</div>
