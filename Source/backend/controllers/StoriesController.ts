@@ -24,9 +24,10 @@ export class StoriesController {
     }
     @Post("/stories/") @Status(201)
 
-    public insert( @BodyParams() storyData: StoryDb) {
+    public insert( @BodyParams() username : string, town : string,
+                    date : number, text: string) {
 
-        this.storiesManager.insertStory(storyData);
+        this.storiesManager.insertStory(new StoryDb(null,username,town,date,text));
         return { "message": "created" }
     }
 

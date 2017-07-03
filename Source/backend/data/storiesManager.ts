@@ -8,8 +8,8 @@ import { StoryDb } from "../models/StoryDb";
 export class StoriesManager {
     private HASH_ROUNDS = 10;
 
-     async insertStory(forInsert:StoryDb) {
-     
+     async insertStory(forInsert:StoryDb) {     
+      
         let res = await db.session().run(
            `CREATE(s:Story {text:{textParam}, date: {dateParam}})
             WITH s

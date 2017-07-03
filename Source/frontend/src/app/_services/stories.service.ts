@@ -10,19 +10,18 @@ export class StoriesService {
   }
 
   loadAllStories() {
-    return this.http.get('api/stories/').toPromise()
-      .then(
-      data => {
-        let storiesData = data.json();
-        let mapped = new Array<Story>();
-        for (let el of storiesData.stories){
-           mapped.push(new Story(el.id, el.username, el.town, el.created, el.text))
-        }
-        // storiesData.forEach(el => {
-        //   mapped.push(new Story(el.id, el.username, el.town, el.created, el.text))
-        // });
-        return mapped;
-      }
-      );
+    return this.http.get('api/stories/')
+      .map( resp => resp.json().stories as Array<Story>);
+  }
+
+  insertStory(forInsert : Story){
+    return this.http.post('api/stories', {username: forInsert.username,
+                  town : forInsert.town, date: forInsert.created, 
+                  text : forInsert.text})
+    .toPromise().then(
+      data => 
+      {
+      let res = data.json();
+      });
   }
 }
