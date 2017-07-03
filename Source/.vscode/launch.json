@@ -1,16 +1,13 @@
 {
     "version": "0.2.0",
-     "compounds": [
-        {
-            "name": "Frontend & Backend",
-            "configurations": [
-                "Frontend",
-                "Backend"
-            ]
-        }
-    ],
-    "configurations": [
-        {
+    "compounds": [{
+        "name": "Frontend & Backend",
+        "configurations": [
+            "Frontend",
+            "Backend"
+        ]
+    }],
+    "configurations": [{
             "type": "node",
             "request": "launch",
             "name": "Backend",
@@ -19,7 +16,8 @@
             "sourceMaps": true,
             "outFiles": [
                 "${workspaceRoot}/backend/dist/**/*.js"
-            ]
+            ],
+            "protocol": "inspector"
         },
         {
             "type": "chrome",
@@ -30,6 +28,6 @@
             "linux": {
                 "runtimeExecutable": "google-chrome-stable"
             }
-        }        
+        }
     ]
 }

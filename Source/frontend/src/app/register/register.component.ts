@@ -31,6 +31,8 @@ export class RegisterComponent implements OnInit {
 
   isUserTaken = Observable.of(false);
 
+  isSucc : boolean = null;
+
   constructor(private http: Http) { }
 
   ngOnInit() {
@@ -52,9 +54,9 @@ export class RegisterComponent implements OnInit {
     this.http.post('/api/register', this.model).subscribe(
       response => {
         if (response.status == 400) {
-          // attach the errors
+          this.isSucc = false;
         } else {
-          // Handle success
+          this.isSucc = true;
         }
         console.log(response);
       },

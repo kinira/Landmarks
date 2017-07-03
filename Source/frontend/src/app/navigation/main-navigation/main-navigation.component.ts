@@ -11,11 +11,14 @@ export class MainNavigationComponent implements OnInit {
 
   public keyword: string;
 
+  loggedUser : string;
+
   constructor(private ngZone: NgZone, private mapsLoader: MapsAPILoader) {
   }
 
   ngOnInit() {
     this.initAutocomplete();
+    this.loggedUser = localStorage.currentUser ? JSON.parse(localStorage.currentUser).username : 'Not logged';
   }
 
   async initAutocomplete() {
