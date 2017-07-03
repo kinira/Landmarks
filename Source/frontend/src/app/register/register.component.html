@@ -33,7 +33,7 @@
     <div class="form-group">
         <label for="confirmPassword">Confirm Password:</label>
         <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" [(ngModel)]="model.confirmPassword" #confirmPassword="ngModel" required minlength="6" maxlength="30" pattern="^(?=.*\d)(?=.*[a-zA-Z]).{8,30}$">
-        <div [hidden]="confirmPassword != (model.password)" class="alert alert-danger">
+         <div [hidden]="model.confirmPassword == model.password" class="alert alert-danger">
             The password doesn't match!
         </div>
     </div>

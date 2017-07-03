@@ -10,7 +10,7 @@ export class RegistrationData extends User {
         var problems = super.validate();
 
         if (!this.confirmPassword || this.password !== this.confirmPassword) {
-            problems.push(new ValidationMessage("password", "The password doesn't match"));
+            problems.push(new ValidationMessage("password", "The passwords doesn't match"));
         }
 
         return problems;
