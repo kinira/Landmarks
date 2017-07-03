@@ -10,7 +10,7 @@ export class RegistrationData extends User {
         var problems = super.validate();
 
         if (!this.confirmPassword || this.password !== this.confirmPassword) {
-            problems.push(new ValidationMessage("username", "User name must be at least 4 symbols"));
+            problems.push(new ValidationMessage("password", "The password doesn't match"));
         }
 
         return problems;
