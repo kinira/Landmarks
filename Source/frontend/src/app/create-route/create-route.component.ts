@@ -1,3 +1,4 @@
+import { RouteService } from '../_services/route.service';
 import { Component, OnInit, ViewChild, NgZone, Input } from '@angular/core';
 import { } from '@types/googlemaps';
 import { AgmCoreModule, MapsAPILoader, AgmMap, MouseEvent, GoogleMapsAPIWrapper } from '@agm/core';
@@ -6,7 +7,8 @@ import { AgmCoreModule, MapsAPILoader, AgmMap, MouseEvent, GoogleMapsAPIWrapper 
 @Component({
   selector: 'app-create-route',
   templateUrl: './create-route.component.html',
-  styleUrls: ['./create-route.component.css']
+  styleUrls: ['./create-route.component.css'],
+  providers: [RouteService]
 })
 
 export class CreateRouteComponent implements OnInit {
@@ -17,7 +19,7 @@ export class CreateRouteComponent implements OnInit {
   @Input()
   city: string = "Sofia";
 
-  constructor(private mapsLoader: MapsAPILoader, private ngZone: NgZone) { }
+  constructor(private mapsLoader: MapsAPILoader, private ngZone: NgZone, private routeService: RouteService) { }
 
   ngOnInit() {
     this.wayPoints = [];
@@ -61,14 +63,18 @@ export class CreateRouteComponent implements OnInit {
     this.prepareMap();
   }
 
-  saveRoute(){
-    if(localStorage.currentUser)
-    {
-     
+  saveRoute() {
+    if (localStorage.currentUser) {
+      let userName = localStorage.currentUser;
+
+      let wayPoints = this.wayPoints.map(w => <google.maps.LatLng>w.location);
+
+      this.routeService.insertRoutes(this.city, wayPoints)
+        .then()
+        .catch();
     }
-    else
-    {
-      //error could not creat routes
+    else {
+      // redirect to login
     }
   }
 

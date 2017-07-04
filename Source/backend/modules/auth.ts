@@ -13,11 +13,14 @@ export class AuthenticationModule {
         return new Promise((resolve, reject) => {
             try {
                 var authHeader = req.headers["authorization"] as string;
-                var token = authHeader.split(" ")[1];
+                var token = authHeader.split(" ")[1].replace(/"/g, '');
 
                 jwt.verify(token, config.appSecret, undefined, (err, decoded) => {
                     if (err) resolve(false);
-                    resolve(true);
+                    else {
+                        req.body.username = (decoded as any).username;
+                        resolve(true);
+                    }
                 });
             } catch (error) {
                 resolve(false);

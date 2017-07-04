@@ -15,6 +15,7 @@ import { RegisterComponent } from './register/register.component';
 import { MarkdownModule } from 'angular2-markdown';
 import { AgmCoreModule } from '@agm/core';
 import { CreateRouteComponent } from './create-route/create-route.component';
+import { AuthModule } from './auth.module';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { CreateRouteComponent } from './create-route/create-route.component';
       libraries: ['places']
     })
   ],
-  exports: [RouterModule, RouteDetailsComponent],
+  exports: [RouterModule, AuthModule, RouteDetailsComponent],
   providers: [MainNavigationComponent],
   bootstrap: [AppComponent, MainNavigationComponent]
 })

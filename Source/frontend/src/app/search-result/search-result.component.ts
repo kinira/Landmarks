@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { } from '@types/googlemaps';
+import { RouteService } from '../_services/route.service';
 import { RouteDetailsComponent } from '../route-details/route-details.component';
 import { MapsAPILoader } from '@agm/core';
 
@@ -18,7 +19,7 @@ export class SearchResultComponent implements OnInit {
   service: any;
   infowindow: any;
 
-  constructor(private route: ActivatedRoute, private mapsLoader: MapsAPILoader) { }
+  constructor(private route: ActivatedRoute, private routeService : RouteService, private mapsLoader: MapsAPILoader) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
