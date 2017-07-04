@@ -15,6 +15,7 @@ export class DashboardController {
 
     @Get("/dashboard")
     public async GetAll(){
-       return await this.dashboardManager.getTopCities();
+        await this.dashboardManager.getTopCities();
+       return {"message": "created"};
     }
 }

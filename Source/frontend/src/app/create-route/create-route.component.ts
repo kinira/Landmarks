@@ -62,7 +62,14 @@ export class CreateRouteComponent implements OnInit {
   }
 
   saveRoute(){
-    // Authorized users only
+    if(localStorage.currentUser)
+    {
+     
+    }
+    else
+    {
+      //error could not creat routes
+    }
   }
 
 
