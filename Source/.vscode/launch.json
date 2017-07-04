@@ -17,7 +17,7 @@
             "outFiles": [
                 "${workspaceRoot}/backend/dist/**/*.js"
             ],
-            "protocol": "inspector"
+            "protocol": "legacy"
         },
         {
             "type": "chrome",
