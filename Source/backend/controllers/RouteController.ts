@@ -28,4 +28,10 @@ export class RouteController {
     var routes = await this.routeManager.getRoutesAsync(city);
     return routes;
   }
+
+  @Get("/byId/:id")
+  async getRoute( @PathParams("id") id: number) {
+    var route = await this.routeManager.getRoute(id);
+    return route;
+  }
 }

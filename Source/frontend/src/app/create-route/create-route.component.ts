@@ -2,6 +2,7 @@ import { RouteService } from '../_services/route.service';
 import { Component, OnInit, ViewChild, NgZone, Input } from '@angular/core';
 import { } from '@types/googlemaps';
 import { AgmCoreModule, MapsAPILoader, AgmMap, MouseEvent, GoogleMapsAPIWrapper } from '@agm/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -14,31 +15,47 @@ import { AgmCoreModule, MapsAPILoader, AgmMap, MouseEvent, GoogleMapsAPIWrapper 
 export class CreateRouteComponent implements OnInit {
   map: google.maps.Map;
 
+  public summary: string = "summary";
+
+  public description: string = "description";
+
   private wayPoints: google.maps.DirectionsWaypoint[];
 
   @Input()
-  city: string = "Sofia";
+  city: string;
 
-  constructor(private mapsLoader: MapsAPILoader, private ngZone: NgZone, private routeService: RouteService) { }
+  constructor(private mapsLoader: MapsAPILoader, private ngZone: NgZone,
+    private router: Router, private route: ActivatedRoute, private routeService: RouteService) { }
 
   ngOnInit() {
     this.wayPoints = [];
-    this.prepareMap();
+
+    this.route.params.subscribe(params => {
+      this.city = params['city'];
+      this.prepareMap();
+    });
   }
 
   async prepareMap() {
     await this.mapsLoader.load();
 
-    const directionsDisplay = new google.maps.DirectionsRenderer;
+    const geocoder = new google.maps.Geocoder();
     const mapElement = document.getElementById('routeMap');
+    geocoder.geocode({ 'address': this.city }, (results, status) => {
+      let location = results[0].geometry.location;
 
-    this.map = new google.maps.Map(mapElement, {
-      zoom: 6,
-      center: { lat: 41.85, lng: -87.65 }
+      this.map = new google.maps.Map(mapElement, {
+        zoom: 15,
+        center: { lat: location.lat(), lng: location.lng() }
+      });
+
+      this.map.addListener('click', e => this.onMapClicked(e));
     });
-
-    this.map.addListener('click', e => this.onMapClicked(e));
   }
+
+
+
+
 
   onMapClicked(eventInfo) {
     var position = <google.maps.LatLng>eventInfo.latLng;
@@ -69,9 +86,9 @@ export class CreateRouteComponent implements OnInit {
 
       let wayPoints = this.wayPoints.map(w => <google.maps.LatLng>w.location);
 
-      this.routeService.insertRoutes(this.city, wayPoints)
-        .then()
-        .catch();
+      this.routeService.insertRoutes(this.city, this.description, this.summary, wayPoints)
+        .then(_ => this.router.navigateByUrl(`/search/${this.city}`))
+        .catch(err => alert(err));
     }
     else {
       // redirect to login

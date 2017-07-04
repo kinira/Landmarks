@@ -25,7 +25,7 @@ export class RouteManager {
             newRoute.name = `${newRoute.city}_${newRoute.username}_${uuid}`
 
             let res = await db.session().run(
-                `Create(n:Route {name:{routeName}}) with n
+                `Create(n:Route {name:{routeName}, summary: {summary}, description: {description}}) with n
                 match (u:User) WHERE u.username = {user}
                 match(c:City) where c.name = {town}
                 create (u)-[:ADDED_ROUTE]->(n)
@@ -33,7 +33,9 @@ export class RouteManager {
                 Return id(n) as id`,
                 {
                     routeName: newRoute.name, user: newRoute.username,
-                    town: newRoute.city
+                    town: newRoute.city,
+                    summary: newRoute.summary,
+                    description: newRoute.description
                 }
             );
 
@@ -59,21 +61,42 @@ export class RouteManager {
              MATCH (r)-[:ADDED_ROUTE]-(u:User)
              MATCH (r)-[:INCLUDES]-(w:Waypoint)
              WHERE c.name = {city}
-             return r.name, id(r) as id, w.lat, w.lng, u.username`, { city: city }
+             return r.name, r.summary, r.description, id(r) as id, w.lat, w.lng, u.username`, { city: city }
         );
 
         var grouped = {};
 
         allStories.records.forEach(rec => {
             var id = rec.get('id').toNumber();
-            if(!grouped[id]){
-                grouped[id] = new Route(rec.get('r.name'), rec.get('u.username'), city, []);
+            if (!grouped[id]) {
+                grouped[id] = new Route(rec.get('r.name'), rec.get('u.username'), city,
+                    rec.get('r.summary'), rec.get('r.description'), [], id);
             }
 
             grouped[id].waypoints.push(new PPosition(rec.get('w.lng'), rec.get('w.lat')))
         });
 
         return grouped;
+    }
+
+    async getRoute(id: number) {
+        let allStories = await db.session().run(
+            `MATCH (r:Route)-[rc:FOR_CITY]-(c:City) 
+             MATCH (r)-[:ADDED_ROUTE]-(u:User)
+             MATCH (r)-[:INCLUDES]-(w:Waypoint)
+             WHERE id(r) = {id}
+             return r.name, r.summary, r.description, id(r) as id, w.lat, w.lng, u.username, c.name as city`, { id: id }
+        );
+
+        var firstRec = allStories.records[0];
+        var result = new Route(firstRec.get('r.name'), firstRec.get('u.username'), firstRec.get('city'),
+            firstRec.get('r.summary'), firstRec.get('r.description'), [], id);
+
+        allStories.records.forEach(rec => {
+            result.waypoints.push(new PPosition(rec.get('w.lng'), rec.get('w.lat')))
+        });
+
+        return result;
     }
 
 }

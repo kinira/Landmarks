@@ -1,9 +1,41 @@
-<p>
-  Display map for: "{{this.keyword}}"
-</p>
+<div class="container">
+  <p>
+    Details for city: "{{this.keyword}}"
+  </p>
 
-The Map:
-<div id="map" style="width:500px;height:380px;"></div>
-End of Map!
+  The Map:
+  <div id="map" style="width:500px;height:380px;"></div>
+  End of Map!
 
-<app-route-details> </app-route-details>
+  <h2> Stories: </h2>
+  <table class="table table-striped">
+    <tr>
+      <th> User </th>
+      <th> City / Town </th>
+      <th> Created </th>
+    </tr>
+    <tr *ngFor="let story of stories">
+      <td> {{story.username}} </td>
+      <td> {{story.town}} </td>
+      <td> {{story.created}} </td>
+    </tr>
+  </table>
+
+  <h2> Routes: </h2>
+  <table class="table table-striped">
+    <tr>
+      <th> User </th>
+      <th> City </th>
+      <th> Description </th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let route of routes">
+      <td> {{ route.username}} </td>
+      <td> {{ route.city}} </td>
+      <td> {{ route.summary}} </td>
+      <td> <a href="/routes/{{route.id}}" class="btn btn-primary"> More </a> </td>
+    </tr>
+  </table>
+
+   <a href="/create-route/{{city}}" class="btn btn-success"> Add route </a>
+</div>

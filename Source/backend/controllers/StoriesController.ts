@@ -7,39 +7,44 @@ import {
 } from "ts-express-decorators";
 
 
-@Controller("/")
+@Controller("/stories")
 
 export class StoriesController {
-        constructor(private storiesManager: StoriesManager) {
+    constructor(private storiesManager: StoriesManager) {
         this.storiesManager = storiesManager;
     }
 
-    @Get("/stories/")
+    @Get("/")
     public async All() {
         try {
-          return { "stories" : await this.storiesManager.getAll() };
+            return { "stories": await this.storiesManager.getAll() };
         } catch (error) {
             return { "stories": "error" }
         }
     }
-    @Post("/stories/") @Status(201)
 
-    public insert(@BodyParams() storyData: StoryDb) {
+    @Get("/:city")
+    public async ByCity( @PathParams("city") city: string) {
+        return { "stories": await this.storiesManager.byCity(city) };
+    }
+
+
+    @Post("/") @Status(201)
+    public insert( @BodyParams() storyData: StoryDb) {
         this.storiesManager.insertStory(storyData);
         return { "message": "created" }
     }
 
-    @Post("/stories/:id") 
+    @Post("/:id")
 
-    public updateStory (@PathParams("id") id, @BodyParams() storyData: StoryDb){
+    public updateStory( @PathParams("id") id, @BodyParams() storyData: StoryDb) {
         this.storiesManager.updateStory(storyData);
-        return {"message" : "updated"}
+        return { "message": "updated" }
     }
 
-    @Delete("/stories/:id")
-    public deleteStory(@PathParams("id") id)
-    {
+    @Delete("/:id")
+    public deleteStory( @PathParams("id") id) {
         this.storiesManager.deleteStory(id);
-        return {"message" : "deleted"}
+        return { "message": "deleted" }
     }
 }

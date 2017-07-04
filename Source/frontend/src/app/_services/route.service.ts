@@ -6,6 +6,7 @@ import { Story } from "../stories/stories.model";
 
 import { } from '@types/googlemaps';
 import { AuthHttp } from 'angular2-jwt';
+import { Route } from '../../../../backend/models/Route';
 
 @Injectable()
 export class RouteService {
@@ -13,14 +14,29 @@ export class RouteService {
   constructor(private http: AuthHttp) {
   }
 
-  insertRoutes(city: String, wayPoints: google.maps.LatLng[]) {
+  insertRoutes(city: String, description: string, summary: string, wayPoints: google.maps.LatLng[]) {
     let pPoints = wayPoints.map(loc => { return { lat: loc.lat(), lng: loc.lng() }; });
-    return this.http.post('api/routes', { city: city, waypoints: pPoints })
+    let data = { city: city, description: description, summary: summary, waypoints: pPoints };
+
+    return this.http.post('api/routes', data)
       .map(resp => resp.json())
       .toPromise();
   }
 
-  getRoutes = (city: String) =>
-    this.http.get(`/api/routes/${city}`).map(resp => resp.json()).toPromise();
+  getRoutes(city: String) {
+    return this.http.get(`/api/routes/${city}`).map(resp => {
+      let data = resp.json();
+      let result: Route[] = [];
+      for (var key in data) {
+        result.push(data[key] as Route);
+      }
+      return result;
+    })
+      .toPromise();
+  }
+
+  getRoute(id: number) {
+    return this.http.get(`/api/routes/byId/${id}`).map(resp => resp.json() as Route).toPromise();
+  }
 
 }

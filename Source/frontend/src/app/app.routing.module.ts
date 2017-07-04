@@ -6,6 +6,7 @@ import { StoriesComponent } from './stories/stories.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { CreateRouteComponent } from './create-route/create-route.component';
+import { RouteDetailsComponent } from './route-details/route-details.component';
 
 const routes: Routes = [
   //{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: 'stories', component: StoriesComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'create-route', component: CreateRouteComponent }
+  { path: 'create-route/:city', component: CreateRouteComponent },
+  { path: 'routes/:routeId', component: RouteDetailsComponent }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

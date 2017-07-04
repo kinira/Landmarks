@@ -4,11 +4,13 @@
   <div id="routeMap" style="width:500px;height:380px;"></div>
   <hr />
 
-  <form class="row">
+
+  <div class="row">
     <div class="col-md-6">
-      <textarea class="form-control" name="" id="" cols="30" rows="10" placeholder="Route description" required></textarea>
+      <input class="form-control" type="text" [(ngModel)]="summary" placeholder="summary" />
+      <textarea class="form-control" name="" id="" cols="30" rows="10" placeholder="Route description" [(ngModel)]="description"></textarea>
     </div>
-  </form>
+  </div>
 
   <div>
     <button (click)="showRoute()" class="btn btn-primary"> Preview </button>

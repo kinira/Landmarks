@@ -10,8 +10,12 @@ export class StoriesService {
   }
 
   loadAllStories() {
-    return this.http.get('api/stories/')
-      .map( resp => resp.json().stories as Array<Story>);
+    return this.http.get('api/stories/').map( resp => resp.json().stories as Array<Story>);
+  }
+
+    byCity(city: string) {
+    return this.http.get(`api/stories/${city}`).map( resp =>
+      resp.json().stories as Array<Story>).toPromise();
   }
 
   insertStory(forInsert : Story){

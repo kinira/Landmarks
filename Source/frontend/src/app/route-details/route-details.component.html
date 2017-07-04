@@ -1,9 +1,13 @@
-<p>
-  Begin Route Sample
-</p>
+<div class="container">
+  <h2> Route for: {{model.city}} </h2>
 
+  <h3> Summary: </h3>
+  <p> {{model.summary}}</p>
 
-<div id="routeMap" style="width:500px;height:380px;"></div>
-<p>
-  End Route Sample
-</p>
+  <h3> Description: </h3>
+  <p> {{model.description}} </p>
+
+  <div id="routeMap" style="width:500px;height:380px;"></div>
+
+  <a href="/search/{{model.city}}" class="btn btn-primary"> Back </a>
+</div>
