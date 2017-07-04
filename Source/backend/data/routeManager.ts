@@ -7,7 +7,7 @@ import { BadRequest } from 'ts-httpexceptions';
 @Service()
 
 export class RouteManager {
-    private HASH_ROUNDS = 10;
+   
 
     // Generates a pseudo random unique id
     uuidv4() {

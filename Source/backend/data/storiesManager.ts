@@ -6,7 +6,7 @@ import { StoryDb } from "../models/StoryDb";
 @Service()
 
 export class StoriesManager {
-    private HASH_ROUNDS = 10;
+    
 
     async insertStory(forInsert: StoryDb) {
 

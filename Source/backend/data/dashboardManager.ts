@@ -8,8 +8,7 @@ export class DashboardItem{
 }
 
 @Service()
-export class DashboardManager {
-    private HASH_ROUNDS = 10;
+export class DashboardManager {   
 
     async getTopCities(){
         let res = await db.session().run(
