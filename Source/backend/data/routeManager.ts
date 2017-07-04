@@ -27,7 +27,7 @@ export class RouteManager {
             let res = await db.session().run(
                 `Create(n:Route {name:{routeName}, summary: {summary}, description: {description}}) with n
                 match (u:User) WHERE u.username = {user}
-                match(c:City) where c.name = {town}
+                merge (c:City {name: {town}})
                 create (u)-[:ADDED_ROUTE]->(n)
                 create (n)-[:FOR_CITY]->(c) 
                 Return id(n) as id`,
